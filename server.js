@@ -435,7 +435,7 @@ function promptRole(departmentChoices) {
       },
       {
         type: 'list',
-        name: 'departmentId',
+        name: 'department_id',
         message: 'Which department does the role belong to?',
         choices: departmentChoices
       }
@@ -471,14 +471,14 @@ function promptRoleRemove(roleChoices) {
     .prompt([
       {
         type: 'list',
-        name: 'roleId',
+        name: 'role_id',
         message: 'Which role would you like to remove?',
         choices: roleChoices
       }
     ])
     .then(function(answer) {
       const query = 'DELETE FROM role WHERE ?';
-      connection.query(query, { id: answer.roleId }, function(err, res) {
+      connection.query(query, { id: answer.role_id }, function(err, res) {
         if (err) throw err;
         console.log('\n');
         console.log('Role removed.');
@@ -540,7 +540,7 @@ function promptDepartmentRemove(departmentChoices) {
     .prompt([
       {
         type: 'list',
-        name: 'departmentId',
+        name: 'department_id',
         message: 'Which department would you like to remove?',
         choices: departmentChoices
       }
