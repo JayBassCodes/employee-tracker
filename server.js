@@ -1,21 +1,29 @@
-const mySQL = require('mysql');
+const mySQL = require('mysql2');
 const inquirer = require('inquirer');
 require('console.table');
+require('dotenv').config();
 
 // Create connection to mySQL database
 const connection = mySQL.createConnection({
-    host: 'localhost',
-  user: 'root',
+    host: '127.0.0.1',
+    port: 3306,
+  user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: 'employee_db'
+  database: process.env.DB_NAME
 });
 
 // Connect to mySQL server and database
 connection.connect(function(err) {
-  if (err) throw err;
+  if (err) {
+    console.error('Error connecting to database: ' + err.stack);
+    return;
+  }
   console.log('Connected to mySQL server.');
-  console.log('Connected to employee_db database.');
-  start();
+  connection.query('CREATE DATABASE IF NOT EXISTS employee_db', function (err, result) {
+    if (err) throw err;
+    console.log('employee_db database created or already exists.');
+    start();
+  });
 });
 
 // Start function
@@ -214,7 +222,7 @@ function promptAdd(roleChoices) {
       },
       {
         type: 'list',
-        name: 'roleId',
+        name: 'role_id',
         message: 'What is the employee\'s role?',
         choices: roleChoices
       }
