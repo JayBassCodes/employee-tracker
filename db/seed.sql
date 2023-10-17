@@ -1,4 +1,4 @@
-JoINSERT INTO department (name) 
+INSERT INTO department (name) 
 VALUES 
 ('IT'),
 ('HR'),
